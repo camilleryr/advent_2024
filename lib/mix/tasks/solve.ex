@@ -7,7 +7,7 @@ defmodule Mix.Tasks.Solve do
 
   @shortdoc "Solve a problem by day and part"
   def run([day, part | rest]) do
-    {time, result} = :timer.tc(fn -> Advent2023.solve(day, part, rest) end)
+    {time, result} = :timer.tc(fn -> Advent2024.solve(day, part, rest) end)
 
     _ = :os.cmd(~c"echo #{result} | pbcopy")
 

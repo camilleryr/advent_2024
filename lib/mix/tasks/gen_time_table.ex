@@ -19,8 +19,8 @@ defmodule Mix.Tasks.GenTimeTable do
 
     header = """
     ****\n
-    Advent Of Code 2023 Execution Times (in ms)\n
-    Puzzles can be found [here](https://adventofcode.com/2023/)\n
+    Advent Of Code 2024 Execution Times (in ms)\n
+    Puzzles can be found [here](https://adventofcode.com/2024/)\n
     ----
 
     | Day | Part | Execution Time |
@@ -51,7 +51,7 @@ defmodule Mix.Tasks.GenTimeTable do
       |> Enum.sort()
       |> Enum.flat_map(fn day ->
         for part <- [1, 2] do
-          {time, _res} = :timer.tc(fn -> Advent2023.solve(day, part) end)
+          {time, _res} = :timer.tc(fn -> Advent2024.solve(day, part) end)
           {day, part, System.convert_time_unit(time, :microsecond, :millisecond)}
         end
       end)
