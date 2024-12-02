@@ -15,7 +15,15 @@ defmodule Mix.Tasks.GenPuzzle do
   end
 
   defp gen_puzzle_file(day) do
-    File.write("./lib/puzzles/day_#{day}.ex", puzzle_template(day))
+    puzzle = get("", day)
+
+    example =
+      case puzzle |> List.to_string() |> Floki.parse_document() do
+        {:ok, html} -> html |> Floki.find("pre &code") |> Floki.text()
+        _ -> ""
+      end
+
+    File.write("./lib/puzzles/day_#{day}.ex", puzzle_template(day, example))
   end
 
   defp gen_input_file(day) do
@@ -46,7 +54,7 @@ defmodule Mix.Tasks.GenPuzzle do
     results
   end
 
-  defp puzzle_template(day) do
+  defp puzzle_template(day, example) do
     ~s"""
     defmodule Day#{day} do
       @moduledoc "https://adventofcode.com/2024/day/#{day}"
@@ -72,6 +80,7 @@ defmodule Mix.Tasks.GenPuzzle do
 
       def test_input(:part_1) do
         \"\"\"
+        #{example}
         \"\"\"
       end
     end
