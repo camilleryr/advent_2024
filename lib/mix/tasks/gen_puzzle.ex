@@ -17,13 +17,13 @@ defmodule Mix.Tasks.GenPuzzle do
   defp gen_puzzle_file(day) do
     puzzle = get("", day)
 
-    example =
+    examples =
       case puzzle |> List.to_string() |> Floki.parse_document() do
-        {:ok, html} -> html |> Floki.find("pre &code") |> Floki.text()
+        {:ok, html} -> html |> Floki.find("pre &code") |> Enum.map(&Floki.text/1)
         _ -> ""
       end
 
-    File.write("./lib/puzzles/day_#{day}.ex", puzzle_template(day, example))
+    File.write("./lib/puzzles/day_#{day}.ex", puzzle_template(day, examples))
   end
 
   defp gen_input_file(day) do
@@ -54,7 +54,20 @@ defmodule Mix.Tasks.GenPuzzle do
     results
   end
 
-  defp puzzle_template(day, example) do
+  defp puzzle_template(day, examples) do
+    rendered_examples =
+      for {example, example_idx} <- Enum.with_index(examples, 1) do
+        postfix = if example_idx > 1, do: "_#{example_idx}", else: ""
+
+        ~s"""
+        def test_input(:part_1#{postfix}) do
+          \"\"\"
+          #{example}
+          \"\"\"
+        end
+        """
+      end
+
     ~s"""
     defmodule Day#{day} do
       @moduledoc "https://adventofcode.com/2024/day/#{day}"
@@ -78,11 +91,7 @@ defmodule Mix.Tasks.GenPuzzle do
         stream_input
       end
 
-      def test_input(:part_1) do
-        \"\"\"
-        #{example}
-        \"\"\"
-      end
+      #{Enum.join(rendered_examples, "\n")}
     end
     """
     |> String.replace("\n\n", "\n")
