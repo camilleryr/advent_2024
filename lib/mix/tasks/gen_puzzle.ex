@@ -19,8 +19,13 @@ defmodule Mix.Tasks.GenPuzzle do
 
     examples =
       case puzzle |> List.to_string() |> Floki.parse_document() do
-        {:ok, html} -> html |> Floki.find("pre &code") |> Enum.map(&Floki.text/1)
-        _ -> ""
+        {:ok, html} ->
+          html
+          |> Floki.find("pre &code")
+          |> Enum.map(fn html -> html |> Floki.text() |> String.trim() end)
+
+        _ ->
+          ""
       end
 
     File.write("./lib/puzzles/day_#{day}.ex", puzzle_template(day, examples))
@@ -94,7 +99,6 @@ defmodule Mix.Tasks.GenPuzzle do
       #{Enum.join(rendered_examples, "\n")}
     end
     """
-    |> String.replace("\n\n", "\n")
     |> String.trim("\n")
     |> Code.format_string!()
   end
