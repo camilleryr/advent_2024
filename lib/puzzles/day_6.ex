@@ -122,9 +122,7 @@ defmodule Day6 do
   end
 
   def visited?(next_point, rest) do
-    rest
-    |> MapSet.new(fn {point, _dir} -> point end)
-    |> MapSet.member?(next_point)
+    Enum.any?(rest, fn {point, _dif} -> point == next_point end)
   end
 
   def test_input(:part_1) do

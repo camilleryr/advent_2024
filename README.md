@@ -18,10 +18,10 @@ Puzzles can be found [here](https://adventofcode.com/2024/)
 | 4 | 2 | 17 ms|
 | 5 | 1 | 3 ms|
 | 5 | 2 | 1 ms|
-| 6 | 1 | 13 ms|
-| 6 | 2 | 10515 ms|
+| 6 | 1 | 12 ms|
+| 6 | 2 | 8436 ms|
 | 7 | 1 | 14 ms|
 | 7 | 2 | 346 ms|
 | 8 | 1 | 5 ms|
 | 8 | 2 | 0 ms|
-||total|10939 ms|
+||total|8859 ms|
