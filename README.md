@@ -26,4 +26,6 @@ Puzzles can be found [here](https://adventofcode.com/2024/)
 | 8 | 2 | 0 ms|
 | 9 | 1 | 67 ms|
 | 9 | 2 | 2070 ms|
-||total|10996 ms|
+| 10 | 1 | 4 ms|
+| 10 | 2 | 2 ms|
+||total|11002 ms|
