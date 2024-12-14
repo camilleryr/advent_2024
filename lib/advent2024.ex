@@ -50,11 +50,20 @@ defmodule Advent2024 do
     output_file = Keyword.get(opts, :output_file)
     dir = Keyword.get(opts, :dir, :normal)
 
-    {{_x, max_y}, _} = Enum.max_by(map, fn {{_x, y}, _} -> y end)
-    {{max_x, _y}, _} = Enum.max_by(map, fn {{x, _y}, _} -> x end)
+    {min_x, max_x, min_y, max_y} =
+      case Keyword.get(opts, :min_max) do
+        nil ->
+          {{_x, max_y}, _} = Enum.max_by(map, fn {{_x, y}, _} -> y end)
+          {{max_x, _y}, _} = Enum.max_by(map, fn {{x, _y}, _} -> x end)
 
-    {{_x, min_y}, _} = Enum.min_by(map, fn {{_x, y}, _} -> y end)
-    {{min_x, _y}, _} = Enum.min_by(map, fn {{x, _y}, _} -> x end)
+          {{_x, min_y}, _} = Enum.min_by(map, fn {{_x, y}, _} -> y end)
+          {{min_x, _y}, _} = Enum.min_by(map, fn {{x, _y}, _} -> x end)
+
+          {min_x, max_x, min_y, max_y}
+
+        min_max ->
+          min_max
+      end
 
     IO.puts("---------------------------------------")
 
