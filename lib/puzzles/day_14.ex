@@ -9,7 +9,7 @@ defmodule Day14 do
   @doc ~S"""
   ## Example
 
-    iex> part_1(test_input(:part_1), 11, 7)
+    iex> do_solve_pt1(test_input(:part_1), 11, 7)
     12
   """
   def do_solve_pt1(stream_input, width, height) do
